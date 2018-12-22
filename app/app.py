@@ -1,10 +1,18 @@
+from database.base import db_session
 from flask import Flask
+from flask_graphql import GraphQLView
+from schemas.schema import schema
 
 app = Flask(__name__)
+app.add_url_rule(
+    '/graphql',
+    view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True))
 
-@app.route('/')
-def hello_world():
-    return 'Hello world Maudy Apan Rania!'
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.remove()
+
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0')
+    app.run(threaded=True, debug=True, host='0.0.0.0')

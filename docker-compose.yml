@@ -7,6 +7,7 @@ services:
       dockerfile: Dockerfile
     volumes:
       - "./app:/app"
+    tty: true
 
   nginx:
     image: webapp-nginx

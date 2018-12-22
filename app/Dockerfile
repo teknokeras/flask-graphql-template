@@ -11,4 +11,5 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD [ "uwsgi", "--ini", "app.ini" ]
+#CMD [ "uwsgi", "--ini", "app.ini" ]
+CMD ["bash"]
