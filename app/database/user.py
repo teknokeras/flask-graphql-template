@@ -5,7 +5,7 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship, backref
 
 
-class User(user):
+class User(Base):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
