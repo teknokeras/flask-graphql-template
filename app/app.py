@@ -12,8 +12,6 @@ from base import db_session
 
 from module.user.model import User
 
-from module.user.login import process
-
 from applog import log
 
 app = Flask(__name__)
@@ -27,10 +25,6 @@ app.add_url_rule(
 @app.teardown_appcontext
 def shutdown_session(exception=None):
     db_session.remove()
-
-@app.route('/api/login', methods=['POST'])
-def get_tasks():
-    return jsonify(process(request.get_json()))
 
 @jwt.user_loader_callback_loader
 def user_loader_callback(identity):

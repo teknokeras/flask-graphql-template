@@ -1,9 +1,13 @@
 import graphene
 from graphql import GraphQLError
-from werkzeug.security import generate_password_hash
-
+from werkzeug.security import generate_password_hash, check_password_hash
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
-from flask_jwt_extended import jwt_required, current_user
+from flask_jwt_extended import (
+    create_access_token, 
+    create_refresh_token, 
+    jwt_required, 
+    current_user
+) 
 
 from .model import User as UserModel
 from base import db_session
@@ -112,12 +116,35 @@ class DeleteUser(graphene.Mutation):
         db_session.delete(user)
         db_session.commit()
         return DeleteRole(message="User {name} is deleted".format(name=user.name))
+
+    
+class LoginUser(graphene.Mutation):
+    access_token = graphene.String()
+    refresh_token = graphene.String()
+
+    class Arguments:
+        email = graphene.String(required=True)
+        password = graphene.String(required=True)
+
+    def mutate(self, info, email, password):
+        user = UserModel.query.filter_by(email=email).first()
+
+        if user is None:
+            raise GraphQLError('Incorrect email and/or password')
+        
+        if not check_password_hash(user.password, password):
+            raise GraphQLError('Incorrect email and/or password')
+
+        access_token = create_access_token(identity=email)
+        refresh_token = create_refresh_token(identity=email)
+        return LoginUser(access_token=access_token, refresh_token=refresh_token)
 	   
 
 class UserMutation:
     create_user = CreateUser.Field()
     update_user = UpdateUser.Field()
     delete_user = DeleteUser.Field()
+    login_user = LoginUser.Field()
 
 class UserQuery:
 	# Allows sorting over multiple columns, by default over the primary key
