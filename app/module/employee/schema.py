@@ -1,7 +1,7 @@
 import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 
-from database.employee import Employee as EmployeeModel
+from .model import Employee as EmployeeModel
 
 class Employee(SQLAlchemyObjectType):
 	class Meta:

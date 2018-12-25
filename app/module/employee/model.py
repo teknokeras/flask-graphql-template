@@ -1,5 +1,5 @@
-from .base import Base
-from .department import Department
+from database.base import Base
+from module.department.model import Department
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship, backref

@@ -1,5 +1,5 @@
-from .base import Base
-from .role import Role
+from database.base import Base, db_session
+from module.role.model import Role
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship, backref

@@ -1,8 +1,8 @@
 import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 
-from .schema_department import CreateDepartment, DepartmentQuery
-from .schema_employee import CreateEmployee, EmployeeQuery
+from module.department.schema import CreateDepartment, DepartmentQuery
+from module.employee.schema import CreateEmployee, EmployeeQuery
 
 
 class Mutation(CreateDepartment, CreateEmployee, graphene.ObjectType):

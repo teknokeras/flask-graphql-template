@@ -5,6 +5,8 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile
+    env_file:
+      - .env
     volumes:
       - "./app:/app"
     tty: true

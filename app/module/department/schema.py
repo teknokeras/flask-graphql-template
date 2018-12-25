@@ -1,7 +1,7 @@
 import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 
-from database.department import Department as DepartmentModel
+from .model import Department as DepartmentModel
 
 
 class Department(SQLAlchemyObjectType):
