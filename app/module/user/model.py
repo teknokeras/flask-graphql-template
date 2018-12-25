@@ -1,4 +1,4 @@
-from database.base import Base, db_session
+from base import Base
 from module.role.model import Role
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func

@@ -4,16 +4,17 @@ from flask_jwt_extended import JWTManager
 from flask_graphql import GraphQLView
 
 from flask_jwt_extended import (
-    JWTManager, 
-    jwt_required, 
-    create_access_token,
-    get_jwt_identity
+    JWTManager
 )
 
-from schemas.schema import schema
-from database.base import db_session
+from schema import schema
+from base import db_session
+
+from module.user.model import User
 
 from module.user.login import process
+
+from applog import log
 
 app = Flask(__name__)
 app.config['JWT_SECRET_KEY'] = 'super-secret'  # Change this!
@@ -30,6 +31,16 @@ def shutdown_session(exception=None):
 @app.route('/api/login', methods=['POST'])
 def get_tasks():
     return jsonify(process(request.get_json()))
+
+@jwt.user_loader_callback_loader
+def user_loader_callback(identity):
+
+	user = User.query.filter_by(email=identity).first()
+
+	if user is None:
+		return None
+
+	return user
 
 if __name__ == '__main__':
     app.run(threaded=True, debug=True, host='0.0.0.0')
