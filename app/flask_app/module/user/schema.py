@@ -10,9 +10,9 @@ from flask_jwt_extended import (
 ) 
 
 from .model import User as UserModel
-from base import db_session
+from flask_app.base import db_session
 
-from module.role.model import Role as RoleModel
+from flask_app.module.role.model import Role as RoleModel
 
 class User(SQLAlchemyObjectType):
 	class Meta:

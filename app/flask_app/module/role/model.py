@@ -1,4 +1,4 @@
-from base import Base
+from flask_app.base import Base
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship, backref

@@ -1,8 +1,8 @@
 import graphene
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 
-from module.role.schema import RoleQuery, RoleMutation
-from module.user.schema import UserQuery, UserMutation
+from .module.role.schema import RoleQuery, RoleMutation
+from .module.user.schema import UserQuery, UserMutation
 
 
 class Mutation(RoleMutation, UserMutation, graphene.ObjectType):

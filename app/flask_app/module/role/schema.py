@@ -4,9 +4,9 @@ from flask_jwt_extended import jwt_required, current_user
 from graphql import GraphQLError
 
 from .model import Role as RoleModel
-from base import db_session
+from flask_app.base import db_session
 
-from applog import log
+from flask_app.applog import log
 
 class Role(SQLAlchemyObjectType):
 	class Meta:

@@ -1,0 +1,7 @@
+version: '3'
+services:
+  flask:
+    command: ["/app/init-prod.sh"]
+  nginx:
+    ports:
+      - 80:80
