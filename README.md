@@ -57,7 +57,7 @@ The Database used is sqlite so if you want to change it feel free to change to w
 Celery is also not included. In case you need to have asynchronous/background processor feel free to add celery.
 
 ## Endpoints
-There is only one endpotin that is /graphql. All HTTP requests must be redirected here (including login).
+There is only one endpoint that is /graphql. All HTTP requests must be redirected here (including login).
 Regarding all possible GraphQL request can be seen in the schema that is visible in the graphiql of this project.
 
 ## Contributing
