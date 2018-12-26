@@ -7,7 +7,7 @@ This project contains only two models
 - User Model
 
 This minimalistic so that this project can be used immediately and ready for whatever business logic you have.
-All interactions are using GraphQL.
+All interactions are using GraphQL. Authorization is using Flask-JWT-Extended.
 
 ## Installation
 Just clone it. You can rename the folder name to reflect your own project. 
