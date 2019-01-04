@@ -4,9 +4,16 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 import os
 
 # Create database engine
-db_name = 'database.db'
-db_path = os.path.join(os.path.dirname(__file__), db_name)
-db_uri = 'sqlite:///{}'.format(db_path)
+
+##Postgresql
+db_uri = 'postgresql+psycopg2://{dbuser}:{dbpass}@{dbhost}/{dbname}'.format(
+    dbuser=os.environ.get('POSTGRES_USER'),
+    dbpass=os.environ.get('POSTGRES_PASS'),
+    dbhost=os.environ.get('POSTGRES_HOST'),
+    dbname=os.environ.get('POSTGRES_DB_NAME')
+)
+
+
 engine = create_engine(db_uri, convert_unicode=True)
 
 # Declarative base model to create database tables and classes

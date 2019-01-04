@@ -1,5 +1,15 @@
 version: '3'
 services:
+  db:
+    restart: unless-stopped
+    image: postgres
+    env_file:
+      - .env
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
   flask:
     image: webapp-flask
     build:
@@ -10,6 +20,8 @@ services:
     volumes:
       - "./app:/app"
     tty: true
+    depends_on:
+      - db
 
   nginx:
     image: webapp-nginx
@@ -20,3 +32,6 @@ services:
       - 5000:80
     depends_on:
       - flask
+
+volumes:
+  db_data:
