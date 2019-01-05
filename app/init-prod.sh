@@ -2,11 +2,9 @@
 
 set -e
 
-cd /app/flask_app
-rm database.db
-python database_setup.py
+python manage.py db init
+python manage.py db migrate
+python manage.py db upgrade
+python manage.py create_superuser
 
-cd ../
-
-python setup-db.sh
-waitress-serve --call 'flask_app:create_app'
+waitress-serve --call 'flask_app:create_app' --port=80

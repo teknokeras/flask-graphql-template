@@ -4,7 +4,7 @@ from flask_jwt_extended import jwt_required, current_user
 from graphql import GraphQLError
 
 from .model import Role as RoleModel
-from flask_app.base import db_session
+from flask_app.ext.database import db
 
 from flask_app.applog import log
 
@@ -34,8 +34,8 @@ class CreateRole(graphene.Mutation):
         	raise GraphQLError('Role with name {name} already exists'.format(name=name))
 
         role = RoleModel(name=name)
-        db_session.add(role)
-        db_session.commit()
+        db.session.add(role)
+        db.session.commit()
 
         return CreateRole(role=role)
 
@@ -57,13 +57,13 @@ class UpdateRole(graphene.Mutation):
         if existing_role is not None:
         	raise GraphQLError('Role with name {name} already exists'.format(name=name))
 
-        role = db_session.query(RoleModel).filter_by(id=id).first()
+        role = db.session.query(RoleModel).filter_by(id=id).first()
 
         if role is None:
         	raise GraphQLError('Role with id {id} does not exists'.format(id=str(id)))
 
         role.name = name
-        db_session.commit()
+        db.session.commit()
         return UpdateRole(role=role)
 
 class DeleteRole(graphene.Mutation):
@@ -82,8 +82,8 @@ class DeleteRole(graphene.Mutation):
         if role is None:
             return DeleteRole(message="Role {id} doesn't exists".format(id=id))
 
-        db_session.delete(role)
-        db_session.commit()
+        db.session.delete(role)
+        db.session.commit()
         return DeleteRole(message="Role {name} is deleted".format(name=role.name))
 	   
 
