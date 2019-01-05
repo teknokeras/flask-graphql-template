@@ -1,11 +1,11 @@
-from flask_app.base import Base
-from flask_app.module.role.model import Role
+from flask_app.ext.database import db
+from flask_app.modules.role.model import Role
 
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
 from sqlalchemy.orm import relationship, backref
 
 
-class User(Base):
+class User(db.Model):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
