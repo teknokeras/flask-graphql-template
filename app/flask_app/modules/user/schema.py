@@ -10,9 +10,9 @@ from flask_jwt_extended import (
 ) 
 
 from .model import User as UserModel
-from flask_app.base import db_session
+from flask_app.ext.database import db
 
-from flask_app.module.role.model import Role as RoleModel
+from flask_app.modules.role.model import Role as RoleModel
 
 class User(SQLAlchemyObjectType):
 	class Meta:
@@ -51,8 +51,8 @@ class CreateUser(graphene.Mutation):
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
 
         user = UserModel(email=email, name=name, nick_name=nick_name, password=hashed_password, role_id=role.id, role=role)
-        db_session.add(user)
-        db_session.commit()
+        db.session.add(user)
+        db.session.commit()
 
         return CreateUser(user=user)
 
@@ -89,7 +89,7 @@ class UpdateUser(graphene.Mutation):
         user.role_id = role.id
         user.role = role
 
-        db_session.commit()
+        db.session.commit()
 
         return UpdateUser(user=user)
 
@@ -113,11 +113,10 @@ class DeleteUser(graphene.Mutation):
         if current_user.id == user.id:
             raise GraphQLError('Cannot delete yourself')
 
-        db_session.delete(user)
-        db_session.commit()
+        db.session.delete(user)
+        db.session.commit()
         return DeleteRole(message="User {name} is deleted".format(name=user.name))
 
-    
 class LoginUser(graphene.Mutation):
     access_token = graphene.String()
     refresh_token = graphene.String()

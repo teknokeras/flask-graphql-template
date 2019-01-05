@@ -23,15 +23,5 @@ services:
     depends_on:
       - db
 
-  nginx:
-    image: webapp-nginx
-    build:
-      context: ./nginx
-      dockerfile: Dockerfile
-    ports:
-      - 5000:80
-    depends_on:
-      - flask
-
 volumes:
   db_data:

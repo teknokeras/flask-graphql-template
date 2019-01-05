@@ -3,5 +3,11 @@ services:
   flask:
     command: ["/app/init-prod.sh"]
   nginx:
+    image: webapp-nginx
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
     ports:
       - 80:80
+    depends_on:
+      - flask
