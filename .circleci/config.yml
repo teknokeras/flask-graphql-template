@@ -7,7 +7,7 @@ jobs:
         environment:
           POSTGRES_USER: appdb
           POSTGRES_PASSWORD: letmein
-          POSTGRES_HOST: db
+          POSTGRES_HOST: localhost
           POSTGRES_DB: flaskdb
           POSTGRES_DB_PORT: 5432
           FLASK_APP: flask_app
