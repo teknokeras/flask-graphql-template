@@ -27,6 +27,10 @@ jobs:
     steps:
       - checkout
       - run: mkdir test-reports
+      - run:
+          name: List all files
+          command: |
+            ls -al
       - restore_cache:
           key: deps1-{{ .Branch }}-{{ checksum "./flask-template/app/requirements.txt" }}
       - run:
