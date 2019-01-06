@@ -28,7 +28,7 @@ jobs:
       - checkout
       - run: mkdir test-reports
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "./flask-template/app/requirements.txt" }}
       - run:
           name: Install Python deps in a venv
           command: |
@@ -36,13 +36,13 @@ jobs:
             . venv/bin/activate
             pip install -r ./app/requirements.txt
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "./flask-template/app/requirements.txt" }}
           paths:
             - "venv"
       - run:
           command: |
             . venv/bin/activate
-            cd app/
+            cd flask-template/app/
             python manage.py test
       - store_artifacts:
           path: test-reports/
