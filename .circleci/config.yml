@@ -27,25 +27,22 @@ jobs:
     steps:
       - checkout
       - run: mkdir test-reports
-      - run:
-          name: move to app folder
-          command: |
-            cd app
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
       - run:
           name: Install Python deps in a venv
           command: |
             python -m venv venv
             . venv/bin/activate
-            pip install -r requirements.txt
+            pip install -r ./app/requirements.txt
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
           paths:
             - "venv"
       - run:
           command: |
             . venv/bin/activate
+            cd app/
             python manage.py test
       - store_artifacts:
           path: test-reports/
