@@ -49,7 +49,7 @@ jobs:
           command: |
             . venv/bin/activate
             cd app/
-            python manage.py test
+            ./run-test.sh
       - store_artifacts:
           path: test-reports/
           destination: tr1
