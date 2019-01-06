@@ -46,16 +46,13 @@ jobs:
           paths:
             - "venv"
       - run:
-        name: Running Flask in background
-        command: |
-          . venv/bin/activate
-          cd app/
-          ./init-dev.sh
-        background: true
-      - run:
           command: |
             . venv/bin/activate
             cd app/
+            python manage.py db init
+            python manage.py db migrate
+            python manage.py db upgrade
+            python manage.py create_superuser
             ./run-test.sh
       - store_artifacts:
           path: test-reports/
