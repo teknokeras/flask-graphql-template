@@ -46,6 +46,13 @@ jobs:
           paths:
             - "venv"
       - run:
+        name: Running Flask in background
+        command: |
+          . venv/bin/activate
+          cd app/
+          ./init-dev.sh
+        background: true
+      - run:
           command: |
             . venv/bin/activate
             cd app/
