@@ -31,9 +31,10 @@ jobs:
           name: List all files
           command: |
             ls -al
+            ls app/
             pwd
       - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./flask-template/app/requirements.txt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
       - run:
           name: Install Python deps in a venv
           command: |
@@ -41,7 +42,7 @@ jobs:
             . venv/bin/activate
             pip install -r ./app/requirements.txt
       - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./flask-template/app/requirements.txt" }}
+          key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
           paths:
             - "venv"
       - run:
