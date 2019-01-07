@@ -10,7 +10,7 @@ setup(
     zip_safe=False,
     install_requires=[
         'flask',
-        'psycopg2',
+        'psycopg2-binary',
         'Flask-Migrate',
         'Flask-JWT-Extended',
         'Flask-GraphQL',

@@ -38,3 +38,4 @@ def client():
     yield testing_client  # this is where the testing happens!
 
     ctx.pop()
+

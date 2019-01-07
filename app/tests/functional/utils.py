@@ -1,13 +1,13 @@
 import json
 
-def test_login(client):
+def get_access_token(client):
     email = "root@flask.com"
     password = "flaskiscool"
 
-    mutation = json.dumps(
+    query = json.dumps(
         {'query':
          '''mutation M {
-              	loginUser(email: "'''+email+'''", password: "'''+password+'''") {
+                loginUser(email: "'''+email+'''", password: "'''+password+'''") {
                     accessToken
                     refreshToken
               }
@@ -16,13 +16,10 @@ def test_login(client):
     })
     response = client.post(
         '/graphql',
-        data=mutation,
+        data=query,
         content_type='application/json'
     )
 
     content = json.loads(response.data)
 
-    assert content['data'] != ''
-    assert content['data']['loginUser'] != ''
-    assert content['data']['loginUser']['accessToken'] != ''
-    assert content['data']['loginUser']['refreshToken'] != ''
+    return content['data']['loginUser']['accessToken']
