@@ -54,13 +54,10 @@ jobs:
           python manage.py db migrate
           python manage.py db upgrade
           python manage.py create_superuser
-          ./run-test.sh
+          pip install -e .
+          pytest --junitxml=test-reports/junit.xml
     - store_test_results:
         path: test-reports
-    - run:
-        name: List test reports
-        command: |
-          ls -al /home/circleci/app/test-reports
     - store_artifacts:
         path: test-reports
         destination: tr1
