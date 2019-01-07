@@ -56,9 +56,13 @@ jobs:
           python manage.py create_superuser
           ./run-test.sh
     - store_test_results:
-        path: test-reports/results.txt
+        path: test-reports
+    - run:
+        name: List test reports
+        command: |
+          ls -al /home/circleci/app/test-reports
     - store_artifacts:
-        path: test-reports/results.txt
+        path: test-reports
         destination: tr1
 
 workflows:
