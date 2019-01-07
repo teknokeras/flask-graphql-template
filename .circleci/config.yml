@@ -20,6 +20,7 @@ jobs:
           DEFAULT_ADMIN_FULL_NAME: root
           DEFAULT_ADMIN_NICK_NAME: root
           DEFAULT_ADMIN_PASSWORD: flaskiscool
+          APP_SETTINGS: flask_app.config.DevelopmentConfig
       - image: circleci/postgres:9.6.5-alpine-ram
         environment:
           POSTGRES_USER: appdb
