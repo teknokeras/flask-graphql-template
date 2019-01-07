@@ -1,66 +1,72 @@
 version: 2
 jobs:
   build:
-    branches:
-      only:
-        - master
     working_directory: ~/app
     docker:
-      - image: circleci/python:3.6.2-stretch-browsers
-        environment:
-          POSTGRES_USER: appdb
-          POSTGRES_PASSWORD: letmein
-          POSTGRES_HOST: localhost
-          POSTGRES_DB: flaskdb
-          POSTGRES_DB_PORT: 5432
-          FLASK_APP: flask_app
-          FLASK_ENV: development
-          DEFAULT_ADMINISTRATOR_ROLE: ADMINISTRATOR
-          DEFAULT_ADMIN_EMAIL: root@flask.com
-          DEFAULT_ADMIN_FULL_NAME: root
-          DEFAULT_ADMIN_NICK_NAME: root
-          DEFAULT_ADMIN_PASSWORD: flaskiscool
-          APP_SETTINGS: flask_app.config.DevelopmentConfig
-      - image: circleci/postgres:9.6.5-alpine-ram
-        environment:
-          POSTGRES_USER: appdb
-          POSTGRES_PASSWORD: letmein
-          POSTGRES_DB: flaskdb
-          POSTGRES_DB_PORT: 5432
-
+    - image: circleci/python:3.6.2-stretch-browsers
+      environment:
+        POSTGRES_USER: appdb
+        POSTGRES_PASSWORD: letmein
+        POSTGRES_HOST: localhost
+        POSTGRES_DB: flaskdb
+        POSTGRES_DB_PORT: 5432
+        FLASK_APP: flask_app
+        FLASK_ENV: development
+        DEFAULT_ADMINISTRATOR_ROLE: ADMINISTRATOR
+        DEFAULT_ADMIN_EMAIL: root@flask.com
+        DEFAULT_ADMIN_FULL_NAME: root
+        DEFAULT_ADMIN_NICK_NAME: root
+        DEFAULT_ADMIN_PASSWORD: flaskiscool
+        APP_SETTINGS: flask_app.config.DevelopmentConfig
+    - image: circleci/postgres:9.6.5-alpine-ram
+      environment:
+        POSTGRES_USER: appdb
+        POSTGRES_PASSWORD: letmein
+        POSTGRES_DB: flaskdb
+        POSTGRES_DB_PORT: 5432
     steps:
-      - checkout
-      - run: mkdir test-reports
-      - run:
-          name: List all files
-          command: |
-            ls -al
-            ls app/
-            pwd
-      - restore_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
-      - run:
-          name: Install Python deps in a venv
-          command: |
-            python -m venv venv
-            . venv/bin/activate
-            pip install -r ./app/requirements.txt
-      - save_cache:
-          key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
-          paths:
-            - "venv"
-      - run:
-          command: |
-            . venv/bin/activate
-            cd app/
-            rm -rf migrations
-            python manage.py db init
-            python manage.py db migrate
-            python manage.py db upgrade
-            python manage.py create_superuser
-            ./run-test.sh
-      - store_test_results:
-          path: test-reports/
-      - store_artifacts:
-          path: test-reports/
-          destination: tr1
+    - checkout
+    - run: mkdir test-reports
+    - run:
+        name: List all files
+        command: |
+          ls -al
+          ls app/
+          pwd
+    - restore_cache:
+        key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
+    - run:
+        name: Install Python deps in a venv
+        command: |
+          python -m venv venv
+          . venv/bin/activate
+          pip install -r ./app/requirements.txt
+    - save_cache:
+        key: deps1-{{ .Branch }}-{{ checksum "./app/requirements.txt" }}
+        paths:
+        - venv
+    - run:
+        command: |
+          . venv/bin/activate
+          cd app/
+          rm -rf migrations
+          python manage.py db init
+          python manage.py db migrate
+          python manage.py db upgrade
+          python manage.py create_superuser
+          ./run-test.sh
+    - store_test_results:
+        path: test-reports/results.txt
+    - store_artifacts:
+        path: test-reports/results.txt
+        destination: tr1
+
+workflows:
+  version: 2
+  workflow:
+    jobs:
+    - build:
+        filters:
+          branches:
+            only:
+            - master
