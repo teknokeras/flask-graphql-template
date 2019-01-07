@@ -12,6 +12,8 @@ from flask_jwt_extended import (
 from .ext.database import db
 from .schema import schema
 
+from .modules.user.model import User
+
 def register_db(app):
 	db.init_app(app)
 

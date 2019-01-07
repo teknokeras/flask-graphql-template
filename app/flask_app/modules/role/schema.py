@@ -94,22 +94,11 @@ class RoleMutation:
 
 class RoleQuery:
 	# Allows sorting over multiple columns, by default over the primary key
-    all_roles = graphene.List(Role)
+    all_roles = SQLAlchemyConnectionField(RoleConn)
 
     role = graphene.relay.Node.Field(Role)
 
     role_by_name = graphene.List(Role, name=graphene.String())
-
-    @jwt_required
-    def resolve_all_roles(self, info, **args):
-        if current_user.role.name != 'ADMINISTRATOR':
-            raise GraphQLError('You are not authorized')
-
-        name = args.get("name")
-        role_query = Role.get_query(info)
-        roles = role_query.all()
-        return roles
-
 
     @jwt_required
     def resolve_role_by_name(self, info, **args):

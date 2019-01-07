@@ -1,12 +1,10 @@
 from flask_app.ext.database import db
 
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, func
-from sqlalchemy.orm import relationship, backref
-
+from flask_app.modules.user.model import User
 
 class Role(db.Model):
     __tablename__ = 'role'
 
-    id = Column(Integer, primary_key=True)
-    name = Column(String)
-    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    users = db.relationship('User', backref='role', lazy='dynamic')

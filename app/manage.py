@@ -45,8 +45,8 @@ def create_superuser():
 		name=os.environ.get('DEFAULT_ADMIN_FULL_NAME'), 
 		nick_name=os.environ.get('DEFAULT_ADMIN_NICK_NAME'), 
 		password=hashed_password, 
-		role_id=role.id, 
-		role=role)
+		role_id=role.id)
+	
 	db.session.add(user)
 	db.session.commit()
 

@@ -50,7 +50,7 @@ class CreateUser(graphene.Mutation):
 
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
 
-        user = UserModel(email=email, name=name, nick_name=nick_name, password=hashed_password, role_id=role.id, role=role)
+        user = UserModel(email=email, name=name, nick_name=nick_name, password=hashed_password, role_id=role.id)
         db.session.add(user)
         db.session.commit()
 
@@ -87,7 +87,6 @@ class UpdateUser(graphene.Mutation):
         user.nick_name = nick_name
         user.email = email
         user.role_id = role.id
-        user.role = role
 
         db.session.commit()
 
@@ -147,7 +146,7 @@ class UserMutation:
 
 class UserQuery:
 	# Allows sorting over multiple columns, by default over the primary key
-    all_users = graphene.List(User)
+    all_users = SQLAlchemyConnectionField(UserConn)
     user = graphene.relay.Node.Field(User)
     user_by_email = graphene.List(User, email=graphene.String())
     user_by_role_id = graphene.List(User, role_id=graphene.Int())
@@ -162,17 +161,6 @@ class UserQuery:
         user_query = User.get_query(info)
 
         users = user_query.filter_by(role_id=role_id).all()
-
-        return users
-
-    @jwt_required
-    def resolve_all_users(self, info):
-        if current_user.role.name != 'ADMINISTRATOR':
-            raise GraphQLError('You are not authorized')
-
-        user_query = User.get_query(info)
-
-        users = user_query.all()
 
         return users
 
