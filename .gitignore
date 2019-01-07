@@ -3,3 +3,5 @@ __pycache__
 .DS_Store
 database.db
 flask_app.egg-info
+dist
+flask_app.egg-info

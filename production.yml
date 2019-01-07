@@ -1,7 +1,12 @@
 version: '3'
 services:
+  db:
+    image: postgres
   flask:
-    command: ["/app/init-prod.sh"]
+    image: webapp-flask
+#    command: ["/app/init-prod.sh"]
+    environment:
+      - APP_SETTINGS=flask_app.config.ProductionConfig
   nginx:
     image: webapp-nginx
     build:

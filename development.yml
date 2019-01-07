@@ -1,5 +1,7 @@
 version: '3'
 services:
   flask:
+    environment:
+      - APP_SETTINGS=flask_app.config.DevelopmentConfig
     ports:
       - 80:80
