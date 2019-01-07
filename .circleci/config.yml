@@ -57,9 +57,9 @@ jobs:
           pip install -e .
           pytest --junitxml=test-reports/junit.xml
     - store_test_results:
-        path: test-reports
+        path: app/test-reports
     - store_artifacts:
-        path: test-reports
+        path: app/test-reports
         destination: tr1
 
 workflows:
