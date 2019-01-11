@@ -24,6 +24,8 @@ env:
   - POSTGRES_DB=flaskdb
   - POSTGRES_DB_PORT=5432
 
+  - APP_SETTINGS=flask_app.config.DevelopmentConfig
+
 install:
   - pip install -r ./app/requirements.txt
 
