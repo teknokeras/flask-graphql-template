@@ -1,0 +1,19 @@
+language: python
+python:
+  - "3.6"
+  - "3.7"
+sudo: required
+
+env:
+  DOCKER_COMPOSE_VERSION: 1.23.2
+
+services:
+  - docker
+
+before_install:
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+
+script:
+  - docker-compose exec flask bash "/app/run-test.sh"
