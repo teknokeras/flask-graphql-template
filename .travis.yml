@@ -15,7 +15,8 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - ./app/build-dev.sh
+  - cd app/
+  - ./build-dev.sh
 
 script:
   - docker-compose exec flask bash "/app/run-test.sh"
