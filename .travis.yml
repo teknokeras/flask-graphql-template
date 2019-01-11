@@ -10,25 +10,20 @@ services:
 env:
   - FLASK_APP=flask_app
   - FLASK_ENV=development
-
   - DEFAULT_ADMINISTRATOR_ROLE=ADMINISTRATOR
-
   - DEFAULT_ADMIN_EMAIL=root@flask.com
   - DEFAULT_ADMIN_FULL_NAME=root
   - DEFAULT_ADMIN_NICK_NAME=root
   - DEFAULT_ADMIN_PASSWORD=flaskiscool
-
   - POSTGRES_USER=appdb
   - POSTGRES_PASSWORD=
   - POSTGRES_HOST=localhost
   - POSTGRES_DB=flaskdb
   - POSTGRES_DB_PORT=5432
-
   - APP_SETTINGS=flask_app.config.DevelopmentConfig
 
 install:
   - pip install -r ./app/requirements.txt
-
 
 before_script:
   - psql -c 'create database flaskdb;' -U postgres
