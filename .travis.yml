@@ -15,7 +15,6 @@ before_install:
   - sudo mv docker-compose /usr/local/bin
 
 install:
-  - cd app/
   - ./build-dev.sh
 
 script:
