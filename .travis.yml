@@ -2,20 +2,39 @@ language: python
 python:
   - "3.6"
 sudo: required
-
-env:
-  DOCKER_COMPOSE_VERSION: 1.23.2
+cache: pip
 
 services:
-  - docker
+  - postgresql
 
-before_install:
-  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-  - chmod +x docker-compose
-  - sudo mv docker-compose /usr/local/bin
+env:
+  - FLASK_APP=flask_app
+  - FLASK_ENV=development
+
+  - DEFAULT_ADMINISTRATOR_ROLE=ADMINISTRATOR
+
+  - DEFAULT_ADMIN_EMAIL=root@flask.com
+  - DEFAULT_ADMIN_FULL_NAME=root
+  - DEFAULT_ADMIN_NICK_NAME=root
+  - DEFAULT_ADMIN_PASSWORD=flaskiscool
+
+  - POSTGRES_USER=appdb
+  - POSTGRES_PASSWORD=
+  - POSTGRES_HOST=localhost
+  - POSTGRES_DB=flaskdb
+  - POSTGRES_DB_PORT=5432
 
 install:
-  - ./build-test.sh
+  - pip install -r ./app/requirements.txt
+
+
+before_script:
+  - psql -c 'create database flaskdb;' -U postgres
 
 script:
-  - docker-compose exec flask bash "/app/run-test.sh"
+  - cd app/
+  - python manage.py db migrate
+  - python manage.py db upgrade
+  - python manage.py create_superuser
+  - pip install -e .
+  - pytest
