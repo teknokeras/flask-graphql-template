@@ -8,7 +8,7 @@ services:
   - postgresql
 
 env:
-  globel:
+  global:
   - FLASK_APP=flask_app
   - FLASK_ENV=development
   - DEFAULT_ADMINISTRATOR_ROLE=ADMINISTRATOR
@@ -16,7 +16,7 @@ env:
   - DEFAULT_ADMIN_FULL_NAME=root
   - DEFAULT_ADMIN_NICK_NAME=root
   - DEFAULT_ADMIN_PASSWORD=flaskiscool
-  - POSTGRES_USER=appdb
+  - POSTGRES_USER=postgres
   - POSTGRES_PASSWORD=
   - POSTGRES_HOST=localhost
   - POSTGRES_DB=flaskdb
