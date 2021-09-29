@@ -5,10 +5,6 @@ from flask_jwt_extended import JWTManager
 
 from flask_graphql import GraphQLView
 
-from flask_jwt_extended import (
-    JWTManager
-)
-
 from .ext.database import db
 from .schema import schema
 
