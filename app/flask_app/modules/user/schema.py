@@ -46,7 +46,7 @@ class CreateUser(graphene.Mutation):
         existing_user = UserModel.query.filter_by(email=email).first()
 
         if existing_user is not None:
-            raise GraphQLError('User with email {email} does not exists'.format(email=email))
+            raise GraphQLError('User with email {email} already exists'.format(email=email))
 
         hashed_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=8)
 
