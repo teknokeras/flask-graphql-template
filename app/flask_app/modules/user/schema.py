@@ -169,7 +169,7 @@ class UserQuery:
         if current_user.role.name != 'ADMINISTRATOR':
             raise GraphQLError('You are not authorized')
 
-        name = args.get("email")
+        email = args.get("email")
 
         user_query = User.get_query(info)
 
