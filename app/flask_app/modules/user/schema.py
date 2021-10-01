@@ -114,7 +114,7 @@ class DeleteUser(graphene.Mutation):
 
         db.session.delete(user)
         db.session.commit()
-        return DeleteRole(message="User {name} is deleted".format(name=user.name))
+        return DeleteUser(message="User {name} is deleted".format(name=user.name))
 
 class LoginUser(graphene.Mutation):
     access_token = graphene.String()
