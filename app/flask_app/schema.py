@@ -1,5 +1,4 @@
 import graphene
-from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 
 from .modules.role.schema import RoleQuery, RoleMutation
 from .modules.user.schema import UserQuery, UserMutation
