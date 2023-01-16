@@ -23,7 +23,7 @@ graphql-server-core==1.1.1
 idna==2.8
 inflection==0.3.1
 itsdangerous==1.1.0
-Jinja2==2.10
+Jinja2==2.11.3
 jsonschema==2.6.0
 Mako==1.0.7
 MarkupSafe==1.1.0
