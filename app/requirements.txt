@@ -32,7 +32,7 @@ openapi-spec-validator==0.2.4
 pluggy==0.8.0
 promise==2.2.1
 psycopg2-binary==2.7.6.1
-py==1.7.0
+py==1.10.0
 pycparser==2.19
 PyJWT==1.7.1
 pytest==4.0.2
